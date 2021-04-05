@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0a5f7ac4-58d7-4fb9-992a-46cd0d852e4b" name="Default Changelist" comment="" />
+    <list default="true" id="0a5f7ac4-58d7-4fb9-992a-46cd0d852e4b" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/main/java/tutorial/QueueEv.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/tutorial/QueueEv.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -14,6 +16,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MavenImportPreferences">
     <option name="importingSettings">
       <MavenImportingSettings>
@@ -22,6 +27,7 @@
     </option>
   </component>
   <component name="ProjectId" id="1qX6VgEk8rpJ3F7Jol5SL6LYEL0" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -76,6 +82,7 @@
       <updated>1617213617045</updated>
       <workItem from="1617213628096" duration="5860000" />
       <workItem from="1617544571123" duration="1792000" />
+      <workItem from="1617628644620" duration="942000" />
     </task>
     <servers />
   </component>
@@ -119,5 +126,9 @@
       <screen x="0" y="29" width="1920" height="1051" />
     </state>
     <state x="217" y="147" width="1028" height="845" key="SettingsEditor/0.29.1920.1051@0.29.1920.1051" timestamp="1617217592446" />
+    <state x="623" y="261" width="672" height="678" key="search.everywhere.popup" timestamp="1617630118847">
+      <screen x="0" y="29" width="1920" height="1051" />
+    </state>
+    <state x="623" y="261" width="672" height="678" key="search.everywhere.popup/0.29.1920.1051@0.29.1920.1051" timestamp="1617630118847" />
   </component>
 </project>

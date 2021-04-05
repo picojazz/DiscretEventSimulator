@@ -35,7 +35,8 @@ public class QueueEv {
          Customer cust = new Customer();  // Cust just arrived.
          cust.arrivTime = Sim.time();
          cust.servTime = genServ.nextDouble();
-         if (servList.size() > 0) {       // Must join the queue.
+         // check if there is a serv available
+         if (servList.size() > 3) {       // Must join the queue.
             waitList.addLast (cust);
             totWait.update (waitList.size());
          } else {                         // Starts service.
