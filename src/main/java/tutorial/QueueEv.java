@@ -35,9 +35,12 @@ public class QueueEv {
          Customer cust = new Customer();  // Cust just arrived.
          cust.arrivTime = Sim.time();
          cust.servTime = genServ.nextDouble();
-         if (servList.size() > 0) {       // Must join the queue.
-            waitList.addLast (cust);
-            totWait.update (waitList.size());
+         if (servList.size() > 0) {// Must join the queue.
+            //check if wailist is not full
+            if(waitList.size() < 20) {
+               waitList.addLast(cust);
+               totWait.update(waitList.size());
+            }
          } else {                         // Starts service.
             custWaits.add (0.0);
             servList.addLast (cust);
