@@ -9,16 +9,18 @@ public class QueueEv {
 
    RandomVariateGen genArr;
    RandomVariateGen genServ;
+   RandomVariateGen genAbandon;
    LinkedList<Customer> waitList = new LinkedList<Customer> ();
    LinkedList<Customer> servList = new LinkedList<Customer> ();
    Tally custWaits     = new Tally ("Waiting times");
    Accumulate totWait  = new Accumulate ("Size of queue");
    
-   class Customer { double arrivTime, servTime; }
+   class Customer { double arrivTime, servTime, abandonTime; } //add abandon time
 
-   public QueueEv (double lambda, double mu) {
+   public QueueEv (double lambda, double mu , double s) {
       genArr = new ExponentialGen (new MRG32k3a(), lambda);
       genServ = new ExponentialGen (new MRG32k3a(), mu);
+      genAbandon = new ExponentialGen (new MRG32k3a(), s);
       //s =s;  add int s in constructor
    }
 
@@ -35,6 +37,9 @@ public class QueueEv {
          Customer cust = new Customer();  // Cust just arrived.
          cust.arrivTime = Sim.time();
          cust.servTime = genServ.nextDouble();
+         cust.abandonTime = genAbandon.nextDouble();
+         //schelude customer's abandon
+         new Abandon(cust).schedule(cust.abandonTime);
          if (servList.size() > 0) {       // Must join the queue.
             waitList.addLast (cust);
             totWait.update (waitList.size());
@@ -60,6 +65,19 @@ public class QueueEv {
       }
    }
 
+   class Abandon extends Event{
+      Customer cust = new Customer();
+
+      public Abandon(Customer customer){
+         cust = customer;
+      }
+
+      @Override
+      public void actions() {
+         waitList.remove(cust);
+      }
+   }
+
    class EndOfSim extends Event {
       public void actions() {
          Sim.stop();
@@ -70,7 +88,8 @@ public class QueueEv {
 	
 	  double mu=2.0;
 	  double lambda= 1.0;
-      QueueEv queue = new QueueEv (lambda, mu);
+	  double s = 1.5;
+      QueueEv queue = new QueueEv (lambda, mu,s);
       queue.simulate (10000.0);
       System.out.println (queue.custWaits.report());
       System.out.println (queue.totWait.report());
