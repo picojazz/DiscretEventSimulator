@@ -14,13 +14,14 @@ public class QueueEv {
    LinkedList<Customer> servList = new LinkedList<Customer> ();
    Tally custWaits     = new Tally ("Waiting times");
    Accumulate totWait  = new Accumulate ("Size of queue");
-   
+   static int nbAbandon;
    class Customer { double arrivTime, servTime, abandonTime; } //add abandon time
 
    public QueueEv (double lambda, double mu , double s) {
       genArr = new ExponentialGen (new MRG32k3a(), lambda);
       genServ = new ExponentialGen (new MRG32k3a(), mu);
       genAbandon = new ExponentialGen (new MRG32k3a(), s);
+
       //s =s;  add int s in constructor
    }
 
@@ -39,13 +40,15 @@ public class QueueEv {
          cust.servTime = genServ.nextDouble();
          cust.abandonTime = genAbandon.nextDouble();
          //schelude customer's abandon
-         new Abandon(cust).schedule(cust.abandonTime);
+
          if (servList.size() > 0) {       // Must join the queue.
             waitList.addLast (cust);
             totWait.update (waitList.size());
+            new Abandon(cust).schedule(cust.abandonTime);
          } else {                         // Starts service.
             custWaits.add (0.0);
             servList.addLast (cust);
+
             new Departure().schedule (cust.servTime);
          }
       }
@@ -57,6 +60,7 @@ public class QueueEv {
          if (waitList.size() > 0) {
             // Starts service for next one in queue.
             Customer cust = waitList.removeFirst();
+            new Abandon(cust).cancel();
             totWait.update (waitList.size());
             custWaits.add (Sim.time() - cust.arrivTime);
             servList.addLast (cust);
@@ -75,6 +79,8 @@ public class QueueEv {
       @Override
       public void actions() {
          waitList.remove(cust);
+         totWait.update (waitList.size());
+         nbAbandon++;
       }
    }
 
@@ -88,11 +94,13 @@ public class QueueEv {
 	
 	  double mu=2.0;
 	  double lambda= 1.0;
-	  double s = 1.5;
+	  double s = 2.5;
+	  //int nbAbandon =0;
       QueueEv queue = new QueueEv (lambda, mu,s);
       queue.simulate (10000.0);
       System.out.println (queue.custWaits.report());
       System.out.println (queue.totWait.report());
+      System.out.println ("Nombre d'abandons ==== "+queue.nbAbandon);
    /*      double Wq=(lambda)/(mu*(mu-lambda));
       System.out.println ("W="+Wq);
       double Lq=(lambda*lambda)/(mu*(mu-lambda));
